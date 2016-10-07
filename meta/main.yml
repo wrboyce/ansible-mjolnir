@@ -1,0 +1,12 @@
+galaxy_info:
+  author: Will Boyce
+  description: Install and Configure Mjolnir.app
+  license: Apache2
+  min_ansible_version: 1.2
+  platforms:
+  - name: MacOSX
+    versions:
+    - all
+  galaxy_tags: [macos]
+
+dependencies: []

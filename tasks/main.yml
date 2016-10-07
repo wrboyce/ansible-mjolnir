@@ -1,0 +1,29 @@
+---
+- name: install lua package
+  homebrew: pkg=lua state=latest
+  tags: [mjolnir]
+
+- name: install luarocks requirements
+  command: luarocks install {{ item }} creates=/usr/local/lib/luarocks/rocks-5.2/{{ item }}
+  with_items:
+  - mjolnir.application
+  - mjolnir.hotkey
+  - mjolnir.screen
+  - mjolnir.bg.grid
+  tags: [mjolnir]
+
+- name: install application
+  homebrew_cask: name=mjolnir
+  tags: [mjolnir]
+
+- name: install configuration
+  copy: src=mjolnir/init.lua dest=~/.mjolnir/ owner="{{ user_username }}" group=staff
+  tags: [mjolnir, config]
+
+- name: enable menubar icon
+  osx_defaults: domain=org.degutis.Mjolnir key=MJShowMenuIconKey type=bool value=yes
+  tags: [mjolnir, config]
+
+- name: disable dock icon
+  osx_defaults: domain=org.degutis.Mjolnir key=MJShowDockIconKey type=bool value=no
+  tags: [mjolnir, config]
